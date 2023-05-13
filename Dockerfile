@@ -1,4 +1,4 @@
-FROM quay.io/sclorg/s2i-base-c9s:c9s
+FROM quay.io/fedora/s2i-base:37
 
 # This image provides an Apache+PHP environment for running PHP
 # applications.
@@ -6,14 +6,9 @@ FROM quay.io/sclorg/s2i-base-c9s:c9s
 EXPOSE 8080
 EXPOSE 8443
 
-# Description
-# This image provides an Apache 2.4 + PHP 7.4 environment for running PHP applications.
-# Exposed ports:
-# * 8080 - alternative port for http
-
 ENV PHP_VERSION=8.1 \
-    PHP_VER_SHORT=81 \
-    NAME=php
+    PHP_SHORT_VER=81 \
+    PATH=$PATH:/usr/bin
 
 ENV SUMMARY="Platform for building and running PHP $PHP_VERSION applications" \
     DESCRIPTION="PHP $PHP_VERSION available as container is a base platform for \
@@ -24,32 +19,28 @@ for several commercial and non-commercial database management systems, so writin
 a database-enabled webpage with PHP is fairly simple. The most common use of PHP coding \
 is probably as a replacement for CGI scripts."
 
-LABEL summary="${SUMMARY}" \
-      description="${DESCRIPTION}" \
-      io.k8s.description="${DESCRIPTION}" \
-      io.k8s.display-name="Apache 2.4 with PHP ${PHP_VERSION}" \
+ENV NAME=php \
+    VERSION=0 \
+    RELEASE=1 \
+    ARCH=x86_64
+
+LABEL summary="$SUMMARY" \
+      description="$DESCRIPTION" \
+      io.k8s.description="$DESCRIPTION" \
+      io.k8s.display-name="Apache 2.4 with PHP $PHP_VERSION" \
       io.openshift.expose-services="8080:http" \
-      io.openshift.tags="builder,${NAME},${NAME}${PHP_VER_SHORT},${NAME}-${PHP_VER_SHORT}" \
-      io.openshift.s2i.scripts-url="image:///usr/libexec/s2i" \
-      io.s2i.scripts-url="image:///usr/libexec/s2i" \
-      name="sclorg/${NAME}-${PHP_VER_SHORT}-c9s" \
-      com.redhat.component="${NAME}-${PHP_VER_SHORT}-container" \
-      version="1" \
-      com.redhat.license_terms="https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI" \
-      help="For more information visit https://github.com/sclorg/s2i-${NAME}-container" \
-      usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=${PHP_VERSION}/test/test-app sclorg/${NAME}-${PHP_VER_SHORT}-c9s sample-server" \
+      io.openshift.tags="builder,php" \
+      name="fedora/$NAME-$PHP_SHORT_VER" \
+      com.redhat.component="$NAME" \
+      version="$VERSION" \
+      usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=/$PHP_VERSION/test/test-app quay.io/fedora/$NAME-$PHP_SHORT_VER sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
-#install nano editor
-RUN yum install -y nano
-#install cron
-RUN yum install -y cronie
-#quick update before install
-RUN yum update -y
+
 # Install Apache httpd and PHP
-ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-pgsql php-bcmath \
+ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-bcmath \
                   php-gd php-intl php-ldap php-mbstring php-pdo \
                   php-process php-soap php-opcache php-xml \
-                  php-gmp php-pecl-apcu php-pecl-zip mod_ssl hostname"
+                  php-gmp php-pecl-apcu mod_ssl hostname"
 
 RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS --nogpgcheck && \
     rpm -V $INSTALL_PKGS && \
@@ -95,3 +86,5 @@ USER 1001
 
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage
+
+
