@@ -40,6 +40,8 @@ LABEL summary="${SUMMARY}" \
       usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=${PHP_VERSION}/test/test-app sclorg/${NAME}-${PHP_VER_SHORT}-c9s sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
+#quick update before install
+RUN yum update -y
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-pgsql php-bcmath \
                   php-gd php-intl php-ldap php-mbstring php-pdo \
