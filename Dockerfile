@@ -39,7 +39,10 @@ LABEL summary="${SUMMARY}" \
       help="For more information visit https://github.com/sclorg/s2i-${NAME}-container" \
       usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=${PHP_VERSION}/test/test-app sclorg/${NAME}-${PHP_VER_SHORT}-c9s sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
-
+#install nano editor
+RUN yum install -y nano
+#install cron
+RUN yum install -y cronie
 #quick update before install
 RUN yum update -y
 # Install Apache httpd and PHP
