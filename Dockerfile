@@ -50,6 +50,11 @@ RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS --nogpgcheck && \
     rpm -V $INSTALL_PKGS && \
     php -v | grep -qe "v$PHP_VERSION\." && echo "Found VERSION $PHP_VERSION" && \
     yum -y clean all --enablerepo='*'
+    
+#install imap module with epel
+RUN yum update -y 
+RUN yum install -y epel-release
+RUN search php-imap
 
 ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
     APP_DATA=${APP_ROOT}/src \
@@ -69,11 +74,6 @@ ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
     HTTPD_DATA_PATH=/var/www \
     HTTPD_DATA_ORIG_PATH=/var/www \
     HTTPD_VAR_PATH=/var
-    
-#install imap module with epel
-RUN yum update -y 
-RUN yum install -y epel-release
-RUN search php-imap
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
 COPY ./s2i/bin/ $STI_SCRIPTS_PATH
