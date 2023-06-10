@@ -55,6 +55,7 @@ RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS --nogpgcheck && \
 RUN dnf -y clean all 
 RUN yum -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
 RUN yum --enablerepo=remi -y install php81-php-imap
+RUN php -m
 
 #declare env variables
 ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
