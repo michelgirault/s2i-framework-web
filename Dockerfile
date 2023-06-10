@@ -44,7 +44,7 @@ RUN yum search php-zip
 
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
-                  php-gd php-zip php-intl php-ldap php-mbstring php-pdo \
+                  php-gd php-pecl-zip php-intl php-ldap php-mbstring php-pdo \
                   php-process php-soap php-opcache php-xml \
                   php-gmp php-pecl-apcu mod_ssl hostname"
 
