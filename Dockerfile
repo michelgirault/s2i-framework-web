@@ -56,6 +56,7 @@ RUN dnf -y clean all
 RUN yum -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
 RUN dnf module list php
 RUN yum search imap
+RUN yum --enablerepo=remi search imap
 
 #declare env variables
 ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
