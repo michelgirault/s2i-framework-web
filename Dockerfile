@@ -54,7 +54,7 @@ RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS --nogpgcheck && \
 #install imap module with epel
 RUN dnf -y clean all 
 RUN yum -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
-RUN dnf module list php
+RUN dnf -y module list php
 RUN yum search imap
 RUN yum --enablerepo=remi search imap
 
