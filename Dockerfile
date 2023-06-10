@@ -39,6 +39,8 @@ LABEL summary="$SUMMARY" \
 #install other package important
 RUN yum -y install yum-utils
 
+RUN yum search php-*
+
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-bcmath \
                   php-gd php-zip php-intl php-ldap php-mbstring php-pdo \
