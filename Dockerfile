@@ -38,11 +38,12 @@ LABEL summary="$SUMMARY" \
 
 #install other package important
 RUN yum -y install yum-utils
+RUN yum -y install libzip-dev libzip
 
 RUN yum search php-*
 
 # Install Apache httpd and PHP
-ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-bcmath \
+ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
                   php-gd php-zip php-intl php-ldap php-mbstring php-pdo \
                   php-process php-soap php-opcache php-xml \
                   php-gmp php-pecl-apcu mod_ssl hostname"
