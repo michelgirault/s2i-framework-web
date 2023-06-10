@@ -40,7 +40,7 @@ LABEL summary="$SUMMARY" \
 RUN yum -y install yum-utils
 RUN yum -y install libzip-dev libzip
 
-RUN yum search php-*
+RUN yum search php-zip
 
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
