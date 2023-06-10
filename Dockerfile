@@ -36,6 +36,9 @@ LABEL summary="$SUMMARY" \
       usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=/$PHP_VERSION/test/test-app quay.io/fedora/$NAME-$PHP_SHORT_VER sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
+#install other package important
+RUN yum -y install yum-utils
+
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-bcmath \
                   php-gd php-zip php-intl php-ldap php-mbstring php-pdo \
