@@ -73,7 +73,8 @@ ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
     HTTPD_VAR_PATH=/var
     
 #install imap module with epel
-RUN yum update -y && yum install -y epel-release
+RUN yum update -y 
+RUN yum install -y epel-release
 RUN search php-imap
 
 # Copy the S2I scripts from the specific language image to $STI_SCRIPTS_PATH
