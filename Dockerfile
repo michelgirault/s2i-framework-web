@@ -56,6 +56,7 @@ RUN yum update -y
 RUN yum install -y epel-release
 RUN search php-imap
 
+#declare env variables
 ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
     APP_DATA=${APP_ROOT}/src \
     PHP_DEFAULT_INCLUDE_PATH=/usr/share/pear \
