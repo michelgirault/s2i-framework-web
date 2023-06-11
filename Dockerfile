@@ -37,14 +37,13 @@ LABEL summary="$SUMMARY" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
 #install other package important
-RUN yum -y install yum-utils
-RUN yum -y install libzip-devel libzip
+RUN dnf -y install yum-utils
+RUN dnf -y install libzip-devel libzip
 
 #activate remi repo
 RUN dnf -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
 RUN dnf config-manager --set-enabled remi
 RUN dnf -y module install php:remi-$PHP_VERSION
-RUN dnf search php-imap
 
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
