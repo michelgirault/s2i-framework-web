@@ -39,10 +39,18 @@ LABEL summary="${SUMMARY}" \
       help="For more information visit https://github.com/sclorg/s2i-${NAME}-container" \
       usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=${PHP_VERSION}/test/test-app sclorg/${NAME}-${PHP_VER_SHORT}-c9s sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
+      
+#install other package important
+RUN dnf -y install yum-utils
+RUN dnf -y install libzip-devel libzip
+
+#activate remi repo centos
+RUN dnf -y install https://rpms.remirepo.net/enterprise/remi-release-9.rpm  
+RUN dnf module enable php:remi-$PHP_VERSION
 
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-pgsql php-bcmath \
-                  php-gd php-intl php-ldap php-mbstring php-pdo \
+                  php-gd php-imap php-intl php-ldap php-mbstring php-pdo \
                   php-process php-soap php-opcache php-xml \
                   php-gmp php-pecl-apcu php-pecl-zip mod_ssl hostname"
 
