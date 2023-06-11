@@ -42,7 +42,7 @@ LABEL summary="${SUMMARY}" \
       
 #install other package important
 RUN dnf -y install yum-utils
-RUN dnf -y install libzip-devel libzip
+RUN dnf -y install libzip
 
 #activate remi repo centos
 RUN dnf -y install https://rpms.remirepo.net/enterprise/remi-release-9.rpm  
