@@ -39,7 +39,6 @@ LABEL summary="$SUMMARY" \
 #install other package important
 RUN yum -y install yum-utils
 RUN yum -y install libzip-devel libzip
-RUN dnf -y install dnf-plugins-core
 
 #activate remi repo
 RUN dnf -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
@@ -50,7 +49,7 @@ RUN dnf search php-imap
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
                   php-gd php-pecl-zip php-intl php-ldap php-mbstring php-pdo \
-                  php-process php-soap php-opcache php-xml \
+                  php-process php-soap php-imap php-opcache php-xml \
                   php-gmp php-pecl-apcu mod_ssl hostname"
 
 RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS --nogpgcheck && \
