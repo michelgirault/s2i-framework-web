@@ -39,10 +39,12 @@ LABEL summary="$SUMMARY" \
 #install other package important
 RUN yum -y install yum-utils
 RUN yum -y install libzip-devel libzip
+RUN dnf -y install dnf-plugins-core
 
 #activate remi repo
 RUN dnf -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
-RUN dnf config-manager --set-enabled remi-php81
+RUN dnf config-manager --set-enabled remi
+RUN dnf -y module install php:remi-8.1
 RUN dnf search php-imap
 
 # Install Apache httpd and PHP
