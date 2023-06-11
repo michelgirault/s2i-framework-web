@@ -43,6 +43,7 @@ RUN yum -y install libzip-devel libzip
 #activate remi repo
 RUN dnf -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
 RUN dnf config-manager --set-enabled remi-php81
+RUN dnf search php-imap
 
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
