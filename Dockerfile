@@ -46,7 +46,7 @@ RUN dnf -y install libzip
 
 #activate remi repo centos
 RUN dnf -y install https://rpms.remirepo.net/enterprise/remi-release-9.rpm  
-RUN dnf module enable php:remi-$PHP_VERSION
+RUN dnf -y module enable php:remi-$PHP_VERSION
 
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-pgsql php-bcmath \
