@@ -40,6 +40,10 @@ LABEL summary="$SUMMARY" \
 RUN yum -y install yum-utils
 RUN yum -y install libzip-devel libzip
 
+#activate remi repo
+RUN dnf -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
+RUN dnf config-manager --set-enabled remi-php81
+
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
                   php-gd php-pecl-zip php-intl php-ldap php-mbstring php-pdo \
@@ -52,10 +56,8 @@ RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS --nogpgcheck && \
     yum -y clean all --enablerepo='*'
     
 #install imap module with epel
-RUN dnf -y clean all 
-RUN yum -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
-RUN yum --enablerepo=remi -y install php81-php-imap
 RUN php -m
+RUN php --version
 
 #declare env variables
 ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
