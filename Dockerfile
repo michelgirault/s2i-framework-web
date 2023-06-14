@@ -93,11 +93,14 @@ RUN chmod +x /usr/libexec/s2i/assemble
 RUN chmod +x /usr/libexec/s2i/save-artifacts
 RUN chmod +x /usr/libexec/s2i/run
 
+
 # Reset permissions of filesystem to default values
 RUN /usr/libexec/container-setup && rpm-file-permissions
 
 USER 1001
 
+#fix with env
+RUN echo 'clear_env = no' >> /etc/php-fpm.d/www.conf
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage
 
