@@ -37,7 +37,7 @@ LABEL summary="$SUMMARY" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
 #install other package important
-RUN dnf -y install yum-utils
+RUN dnf -y install yum-utils nano git
 RUN dnf -y install libzip-devel libzip
 
 #activate remi repo
