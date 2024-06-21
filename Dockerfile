@@ -1,4 +1,4 @@
-FROM quay.io/fedora/s2i-base:37
+FROM quay.io/fedora/s2i-base:38
 
 # This image provides an Apache+PHP environment for running PHP
 # applications.
@@ -6,8 +6,8 @@ FROM quay.io/fedora/s2i-base:37
 EXPOSE 8080
 EXPOSE 8443
 
-ENV PHP_VERSION=8.1 \
-    PHP_SHORT_VER=81 \
+ENV PHP_VERSION=8.3 \
+    PHP_SHORT_VER=83 \
     PATH=$PATH:/usr/bin
 
 ENV SUMMARY="Platform for building and running PHP $PHP_VERSION applications" \
@@ -36,31 +36,17 @@ LABEL summary="$SUMMARY" \
       usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=/$PHP_VERSION/test/test-app quay.io/fedora/$NAME-$PHP_SHORT_VER sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
-#install other package important
-RUN dnf -y install yum-utils nano git
-RUN dnf -y install libzip-devel libzip
-
-#activate remi repo
-RUN dnf -y install https://rpms.remirepo.net/fedora/remi-release-37.rpm
-RUN dnf config-manager --set-enabled remi
-RUN dnf -y module install php:remi-$PHP_VERSION
-
 # Install Apache httpd and PHP
-ARG INSTALL_PKGS="php php-fpm php-devel php-mysqlnd php-bcmath \
-                  php-gd php-pecl-zip php-intl php-ldap php-mbstring php-pdo \
-                  php-process php-soap php-imap php-opcache php-xml \
+ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-bcmath \
+                  php-gd php-intl php-ldap php-mbstring php-pdo \
+                  php-process php-soap php-opcache php-xml \
                   php-gmp php-pecl-apcu mod_ssl hostname"
 
 RUN yum install -y --setopt=tsflags=nodocs $INSTALL_PKGS --nogpgcheck && \
     rpm -V $INSTALL_PKGS && \
     php -v | grep -qe "v$PHP_VERSION\." && echo "Found VERSION $PHP_VERSION" && \
     yum -y clean all --enablerepo='*'
-    
-#install imap module with epel
-RUN php -m
-RUN php --version
 
-#declare env variables
 ENV PHP_CONTAINER_SCRIPTS_PATH=/usr/share/container-scripts/php/ \
     APP_DATA=${APP_ROOT}/src \
     PHP_DEFAULT_INCLUDE_PATH=/usr/share/pear \
@@ -86,16 +72,6 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 # Copy extra files to the image.
 COPY ./root/ /
 
-#fix permission 
-RUN chmod +x /usr/libexec/container-setup
-RUN chmod +x /usr/libexec/s2i/usage
-RUN chmod +x /usr/libexec/s2i/assemble
-RUN chmod +x /usr/libexec/s2i/save-artifacts
-RUN chmod +x /usr/libexec/s2i/run
-
-#fix with env
-RUN echo 'clear_env = no' >> /etc/php-fpm.d/www.conf
-
 # Reset permissions of filesystem to default values
 RUN /usr/libexec/container-setup && rpm-file-permissions
 
@@ -103,5 +79,3 @@ USER 1001
 
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage
-
-
