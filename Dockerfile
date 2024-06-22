@@ -1,4 +1,4 @@
-FROM quay.io/fedora/s2i-base:38
+FROM quay.io/fedora/s2i-base:39
 
 # This image provides an Apache+PHP environment for running PHP
 # applications.
@@ -36,6 +36,15 @@ LABEL summary="$SUMMARY" \
       usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=/$PHP_VERSION/test/test-app quay.io/fedora/$NAME-$PHP_SHORT_VER sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
+#update repo and files
+RUN dnf update -y
+
+#install repository for php 8.3
+RUN dnf install https://rpms.remirepo.net/fedora/remi-release-39.rpm -y
+
+#switch defaut repo
+RUN dnf module enable php:remi-8.3 -y
+
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-fpm php-mysqlnd php-bcmath \
                   php-gd php-intl php-ldap php-mbstring php-pdo \
@@ -71,6 +80,13 @@ COPY ./s2i/bin/ $STI_SCRIPTS_PATH
 
 # Copy extra files to the image.
 COPY ./root/ /
+
+#fix permission 
+RUN chmod +x /usr/libexec/container-setup
+RUN chmod +x /usr/libexec/s2i/usage
+RUN chmod +x /usr/libexec/s2i/assemble
+RUN chmod +x /usr/libexec/s2i/save-artifacts
+RUN chmod +x /usr/libexec/s2i/run
 
 # Reset permissions of filesystem to default values
 RUN /usr/libexec/container-setup && rpm-file-permissions
