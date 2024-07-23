@@ -1,5 +1,8 @@
 #!/bin/sh
 
+#fix the volume with the right owner
+chown -R 1001:0 ${APP_ROOT}
+
 DISTRO=`cat /etc/*-release | grep ^ID= | grep -Po '".*?"' | tr -d '"'`
 NAMESPACE=centos
 [[ $DISTRO =~ rhel* ]] && NAMESPACE=rhscl
