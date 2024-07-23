@@ -24,5 +24,6 @@ oc exec <pod> -- curl 127.0.0.1:8080
 Alternatively, to run the image directly using podman or docker, or how to use it as a parent image in a Dockerfile, see documentation at
 https://github.com/sclorg/s2i-php-container/blob/master/${PHP_VERSION}/README.md
 EOF
+#add local script
 echo "show mw if volume is there"
 echo ls -la web/sites
