@@ -46,7 +46,7 @@ RUN dnf install https://rpms.remirepo.net/fedora/remi-release-39.rpm -y
 RUN dnf module enable php:remi-8.3 -y
 
 # Install Apache httpd and PHP
-ARG INSTALL_PKGS="php php-zip php-fpm php-mysqlnd php-bcmath \
+ARG INSTALL_PKGS="php php7.3-zip php-fpm php-mysqlnd php-bcmath \
                   php-gd php-intl php-ldap php-mbstring php-pdo \
                   php-process php-soap php-opcache php-xml \
                   php-gmp php-pecl-apcu mod_ssl hostname"
