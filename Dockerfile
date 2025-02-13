@@ -47,7 +47,7 @@ RUN dnf module enable php:remi-8.3 -y
 
 # Install Apache httpd and PHP
 ARG INSTALL_PKGS="php php-pecl-zip php-fpm php-mysqlnd php-bcmath \
-                  php-gd php-intl php-ldap php-mbstring php-pdo \
+                  php-gd php-intl php-imap php-ldap php-mbstring php-pdo \
                   php-process php-soap php-opcache php-xml \
                   php-gmp php-pecl-apcu mod_ssl hostname"
 
