@@ -36,6 +36,7 @@ LABEL summary="$SUMMARY" \
       usage="s2i build https://github.com/sclorg/s2i-php-container.git --context-dir=/$PHP_VERSION/test/test-app quay.io/fedora/$NAME-$PHP_SHORT_VER sample-server" \
       maintainer="SoftwareCollections.org <sclorg@redhat.com>"
 
+
 #update repo and files
 RUN dnf update -y
 
